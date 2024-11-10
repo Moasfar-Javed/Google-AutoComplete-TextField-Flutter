@@ -6,33 +6,26 @@ class DioErrorHandler {
   ErrorResponse errorResponse = ErrorResponse();
   String errorDescription = "";
 
-
-
-
   ErrorResponse handleDioError(DioException dioError) {
     switch (dioError.type) {
       case DioExceptionType.cancel:
-
         errorResponse.message = "Request to API server was cancelled";
         break;
       case DioExceptionType.connectionTimeout:
         errorResponse.message = "Connection timeout with API server";
         break;
       case DioExceptionType.unknown:
-
-        if((dioError.message?.contains("RedirectException")??false)){
+        if ((dioError.message?.contains("RedirectException") ?? false)) {
           errorResponse.message = "${dioError.message}";
-        }else {
+        } else {
           errorResponse.message = "Please check the internet connection";
         }
         break;
       case DioExceptionType.receiveTimeout:
-
         errorResponse.message = "Receive timeout in connection with API server";
         break;
       case DioExceptionType.badResponse:
         try {
-
           if (dioError.response?.data['message'] != null) {
             errorResponse.message = dioError.response?.data['message'];
           } else {
@@ -43,7 +36,6 @@ class DioErrorHandler {
                   dioError.response!.statusCode, dioError.response!.data);
           }
         } catch (e) {
-
           if ((dioError.response?.statusMessage ?? "").isNotEmpty)
             errorResponse.message = dioError.response?.statusMessage;
           else
@@ -53,11 +45,9 @@ class DioErrorHandler {
 
         break;
       case DioExceptionType.sendTimeout:
-
         errorResponse.message = "Send timeout in connection with API server";
         break;
       default:
-
         errorResponse.message = "Something went wrong";
         break;
     }
@@ -68,8 +58,8 @@ class DioErrorHandler {
     switch (statusCode) {
       case 400:
         return getMas(error);
-    // case 401:
-    //   return checkTokenExpire(error);
+      // case 401:
+      //   return checkTokenExpire(error);
       case 404:
         return getMas(error);
       case 403:
@@ -120,31 +110,25 @@ class DioErrorHandler {
   }
 }
 
-
 class ErrorHandler {
-
-  static final ErrorHandler _inst=ErrorHandler.internal();
+  static final ErrorHandler _inst = ErrorHandler.internal();
   ErrorHandler.internal();
 
   factory ErrorHandler() {
     return _inst;
   }
-  ErrorResponse errorResponse=ErrorResponse();
+  ErrorResponse errorResponse = ErrorResponse();
 
   ErrorResponse handleError(var error) {
-    if(error.runtimeType.toString().toLowerCase() =="_TypeError".toLowerCase()){
+    if (error.runtimeType.toString().toLowerCase() ==
+        "_TypeError".toLowerCase()) {
       // return error.toString();
-      errorResponse.message ="The Provided API key is invalid";
+      errorResponse.message = "";
       return errorResponse;
-    }
-
-
-    else if(error is DioException) {
+    } else if (error is DioException) {
       return DioErrorHandler().handleDioError(error);
     }
-    errorResponse.message = "The Provided API key is invalid";
+    errorResponse.message = "";
     return errorResponse;
   }
-
-
 }
