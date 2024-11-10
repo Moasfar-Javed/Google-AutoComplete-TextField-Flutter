@@ -123,12 +123,10 @@ class ErrorHandler {
     if (error.runtimeType.toString().toLowerCase() ==
         "_TypeError".toLowerCase()) {
       // return error.toString();
-      errorResponse.message = "";
       return errorResponse;
     } else if (error is DioException) {
       return DioErrorHandler().handleDioError(error);
     }
-    errorResponse.message = "";
     return errorResponse;
   }
 }
