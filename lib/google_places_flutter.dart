@@ -278,7 +278,9 @@ class _GooglePlaceAutoCompleteTextFieldState
       widget.getPlaceDetailWithLatLng!(prediction);
     } catch (e) {
       var errorHandler = ErrorHandler.internal().handleError(e);
-      _showSnackBar("${errorHandler.message}");
+      if (errorHandler.message != null) {
+        _showSnackBar("${errorHandler.message}");
+      }
     }
   }
 
