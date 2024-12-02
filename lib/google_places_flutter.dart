@@ -122,7 +122,6 @@ class _GooglePlaceAutoCompleteTextFieldState
   }
 
   getLocation(String text) async {
-    if (text.trim() == "") return;
     String apiURL =
         "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$text&key=${widget.googleAPIKey}&language=${widget.language}";
 
@@ -308,15 +307,15 @@ class _GooglePlaceAutoCompleteTextFieldState
   }
 
   _showSnackBar(String errorData) {
-    if (widget.showError) {
-      final snackBar = SnackBar(
-        content: Text("$errorData"),
-      );
+    // if (widget.showError) {
+    //   final snackBar = SnackBar(
+    //     content: Text("$errorData"),
+    //   );
 
-      // Find the ScaffoldMessenger in the widget tree
-      // and use it to show a SnackBar.
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
+    //   // Find the ScaffoldMessenger in the widget tree
+    //   // and use it to show a SnackBar.
+    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    // }
   }
 }
 
